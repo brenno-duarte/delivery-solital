@@ -1,0 +1,114 @@
+.welcome {
+    background-color: #1C1C1C;
+}
+
+.welcome span p {
+    color: #FFF !important;
+}
+
+.welcome span p:hover {
+    color: #FFF !important;
+}
+
+.welcome span small {
+    color: #FFF !important;
+}
+
+.welcome span small:hover {
+    color: #FFF !important;
+}
+
+.btn-theme {
+    background-color: #0071E3;
+    color: #FFF !important;
+}
+
+.fa-arrows-alt-v {
+    float: right;
+    color: grey;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #363636;
+}
+
+::-webkit-scrollbar {
+    background: #363636;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #9C9C9C;
+}
+
+.subitem li {
+    color: #000;
+}
+
+.nav-link {
+    color: #000 !important;
+}
+
+.nav-link:hover {
+    color: #0071E3 !important;
+}
+
+.bg-menu {
+    background-color: #363636;
+    color: #000;
+}
+
+.page-link {
+    color: #FFF;
+    background-color: #778899;
+}
+
+.bg-menu-2 {
+    background-color: #CFCFCF !important;
+}
+
+#wrapper {
+    background-color: #E8E8E8 !important;
+}  
+
+#sidebar-wrapper ul ul li {
+    background-color: #B5B5B5;
+}
+
+#sidebar-wrapper ul ul li:hover {
+    background-color: #E8E8E8;
+}
+
+.list-group-item-action {
+    color: #FFF !important;
+}
+
+.list-group-item-action:hover, .list-group-item-action:focus {
+    background-color: #696969 !important;
+    color: #fff !important;
+}
+
+.bg-name {
+    background-color: #E8E8E8;
+    color: #1C1C1C;
+}
+
+.page-link:hover {
+    background-color: #1E90FF;
+    color: #FFF;
+}
+
+.dropdown-name {
+    color: #FFF;
+}
+
+.dropdown-item {
+    color: #FFF;
+}
+
+.dropdown .username:hover {
+    color: #1C1C1C !important;
+}
+
+.home-link {
+    color: #000;
+}
