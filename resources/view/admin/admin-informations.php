@@ -24,24 +24,24 @@
 
     <div class="row">
         <div class="col-md-12">
-            <form class="form-signin mt-3" method="POST" action="<?= url('setting.post', ['id' => $setting['idSet']]); ?>" enctype="multipart/form-data">
+            <form class="form-signin mt-3" method="POST" action="<?= url('informations.post', ['id' => $informations['idSet']]); ?>" enctype="multipart/form-data">
                 <?= csrf_token(); ?>
 
                 <h2 class="mb-4">Informações da empresa</h2>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="company">Nome da empresa</label>
-                        <input type="text" name="company" id="company" class="input-class" value="<?= $setting['companyName'] ?>" required autofocus>
+                        <input type="text" name="company" id="company" class="input-class" value="<?= $informations['companyName'] ?>" required autofocus>
                     </div>
 
                     <div class="form-group col-md-2">
                         <label for="phone">Telefone</label>
-                        <input type="tel" name="phone" id="phone" class="input-class" value="<?= $setting['phone'] ?>" required>
+                        <input type="tel" name="phone" id="phone" class="input-class" value="<?= $informations['phone'] ?>" required>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="email">E-mail (Opcional)</label>
-                        <input type="email" name="email" id="email" class="input-class" value="<?= $setting['email'] ?>" required>
+                        <input type="email" name="email" id="email" class="input-class" value="<?= $informations['email'] ?>" required>
                     </div>
                 </div>
 
@@ -49,18 +49,18 @@
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="address">Rua</label>
-                        <input type="text" id="address" class="input-class" name="address" value="<?= $setting['address'] ?>" required>
+                        <input type="text" id="address" class="input-class" name="address" value="<?= $informations['address'] ?>" required>
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="district">Bairro</label>
-                        <input type="text" id="district" class="input-class" name="district" value="<?= $setting['district'] ?>" required>
+                        <input type="text" id="district" class="input-class" name="district" value="<?= $informations['district'] ?>" required>
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="state">Estado</label>
                         <select id="state" name="state" class="select-class" required>
-                            <option value="<?= $setting['state'] ?>" selected><?= $setting['state'] ?> (Cadastrado)</option>
+                            <option value="<?= $informations['state'] ?>" selected><?= $informations['state'] ?> (Cadastrado)</option>
                             <option value="AC">Acre</option>
                             <option value="AL">Alagoas</option>
                             <option value="AP">Amapá</option>
@@ -93,19 +93,19 @@
 
                     <div class="form-group col-md-1">
                         <label for="number">Número</label>
-                        <input type="number" id="number" class="input-class" name="number" value="<?= $setting['number'] ?>" required>
+                        <input type="number" id="number" class="input-class" name="number" value="<?= $informations['number'] ?>" required>
                     </div>
                 </div>
 
                 <h2 class="mb-4 mt-4">Logomarca</h2>
                 <div class="form-row">
-                    <?php if($setting['logo'] != null): ?>
-                    <div class="form-group col-md-6 rounded border border-secondary p-3">
-                        <img src="<?= self::loadImg($setting['logo']) ?>" class="img-fluid">
-                        <a href="<?= url('delete.logo', ['id' => $setting['idSet']]) ?>" class="btn btn-4 float-right" onclick="return confirm('Apagar a logomarca atual?')">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
-                    </div>
+                    <?php if ($informations['logo'] != null) : ?>
+                        <div class="form-group col-md-6 rounded border border-secondary p-3">
+                            <img src="<?= self::loadImg($informations['logo']) ?>" class="img-fluid">
+                            <a onclick="return confirm('Deseja realmente excluir esta foto?')" href="<?= url('delete.logo', ['id' => $informations['idSet']]) ?>" class="btn btn-4 float-right" onclick="return confirm('Apagar a logomarca atual?')">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
                     <?php endif; ?>
 
                     <div class="form-group col-md-6">
@@ -117,10 +117,6 @@
                     <button class="btn btn-3 mr-3" type="submit">
                         <i class="fas fa-check-circle"></i> Salvar
                     </button>
-
-                    <a href="javascript:history.back();" class="btn btn-1">
-                        <i class="fas fa-arrow-circle-left"></i> Voltar
-                    </a>
                 </div>
             </form>
         </div>

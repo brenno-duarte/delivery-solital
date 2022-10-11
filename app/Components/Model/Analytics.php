@@ -1,6 +1,7 @@
 <?php
 
 namespace Solital\Components\Model;
+
 use Solital\Components\Model\Model;
 use Solital\Core\Resource\Cookie;
 
@@ -17,10 +18,15 @@ class Analytics extends Model
         ];
     }
 
+    /**
+     * @param string $uri
+     * 
+     * @return void
+     */
     public function verify(string $uri): void
     {
         $date = $this->instance()->select(null, "DATE(created_at) = DATE(now())")->build("ALL");
-        
+
         if ($date != date('Y-m-d H:i:s')) {
             if (Cookie::has('last_id') == false) {
                 if (strpos($_SERVER['REQUEST_URI'], $uri) !== false) {
@@ -29,15 +35,18 @@ class Analytics extends Model
                     Cookie::new('last_id', $id['lastId']);
                 }
             }
-            
+
             if (Cookie::has('last_id') == true) {
                 if (strpos($_SERVER['REQUEST_URI'], $uri) !== false) {
-                    $this->instance()->update(['views'], ['views +1'], "idAnalytic=".Cookie::show('last_id'));
+                    $this->instance()->update(['views'], ['views +1'], "idAnalytic=" . Cookie::show('last_id'));
                 }
             }
         }
     }
 
+    /**
+     * @return null|array
+     */
     public function list()
     {
         return $this->instance()->select(null, "DATE(created_at) = DATE(now())")->build("ALL");

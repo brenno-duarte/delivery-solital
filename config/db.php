@@ -3,7 +3,7 @@
 define('DB_CONFIG', [
     'DRIVE' => 'mysql',
     'HOST' => 'localhost',
-    'DBNAME' => 'db_delivery',
-    'USER' => 'brenno',
-    'PASS' => '123'
+    'DBNAME' => 'ecommerce_solital',
+    'USER' => 'root',
+    'PASS' => ''
 ]);

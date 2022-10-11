@@ -14,32 +14,59 @@ class Category extends Model
         ];
     }
 
+    /**
+     * @return array
+     */
     public function pagination()
     {
         return $this->instance()->pagination($this->table, 4);
     }
 
+    /**
+     * @return array
+     */
     public function listAll()
     {
         return $this->instance()->select()->build('ALL');
     }
     
-    public function list($id)
+    /**
+     * @param int $id
+     * 
+     * @return null|array
+     */
+    public function list(int $id)
     {
         return $this->instance()->select($id)->build('ONLY');
     }
 
-    public function insert($name)
+    /**
+     * @param string $name
+     * 
+     * @return [type]
+     */
+    public function insert(string $name)
     {
         return $this->instance()->insert([$name]);
     }
 
-    public function update($name, $id)
+    /**
+     * @param string $name
+     * @param int $id
+     * 
+     * @return [type]
+     */
+    public function update(string $name, int $id)
     {
         return $this->instance()->update($this->columns, [$name], "idCategory=$id");
     }
 
-    public function delete($id)
+    /**
+     * @param int $id
+     * 
+     * @return [type]
+     */
+    public function delete(int $id)
     {
         return $this->instance()->delete($id)->build();
     }

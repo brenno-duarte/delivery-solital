@@ -1,6 +1,7 @@
 <?php
 
 namespace Solital\Components\Controller\Auth;
+
 use Solital\Components\Controller\Auth\AuthController;
 use Solital\Components\Model\Order;
 use Solital\Components\Model\Analytics;
@@ -10,10 +11,13 @@ use Solital\Core\Wolf\Wolf;
 
 class LoginController extends AuthController
 {
-    public function login()
+    /**
+     * @return void
+     */
+    public function login(): void
     {
         Guardian::checkLogged();
-        
+
         Wolf::loadView('auth/login', [
             'title' => 'Login',
             'msg1' => Message::get('errorLogin'),
@@ -24,11 +28,14 @@ class LoginController extends AuthController
         Message::clear('change');
     }
 
-    public function verify()
+    /**
+     * @return void
+     */
+    public function verify(): void
     {
         $res = $this->columns('username', 'pass')
-                    ->values('email', 'pass')
-                    ->register('tb_auth');
+            ->values('email', 'pass')
+            ->register('tb_auth');
 
         if ($res == false) {
             Message::new('errorLogin', 'Usuário e/ou senha incorretos');
@@ -36,11 +43,14 @@ class LoginController extends AuthController
         }
     }
 
+    /**
+     * @return void
+     */
     public function dashboard(): void
     {
         Guardian::checkLogin();
         $order = new Order();
-        
+
         Wolf::loadView('view.admin.admin-dashboard', [
             'title' => 'Dashboard',
             'report' => (new Analytics())->list(),
@@ -49,9 +59,11 @@ class LoginController extends AuthController
         ]);
     }
 
-    public function exit()
+    /**
+     * @return void
+     */
+    public function exit(): void
     {
         Guardian::logoff();
     }
-
 }

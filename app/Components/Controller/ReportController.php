@@ -10,19 +10,39 @@ use Solital\Components\Model\Report;
 
 class ReportController
 {
+    /**
+     * @var int
+     */
     private $billing = 0;
+
+    /**
+     * @var int
+     */
     private $billingMonth = 0;
+
+    /**
+     * Costruct
+     */
+    public function __construct()
+    {
+        Guardian::checkLogin();
+    }
 
     /**
      * @return void
      */
     public function report(): void
     {
-        Guardian::checkLogin();
         $report = new Report();
         $pag = (new Order())->receivedPagination();
         $return = (new Order())->returned();
         $products = (new Product())->listAll();
+
+        if ($pag['rows'] != '') {
+            $received = count($pag['rows']);
+        } else {
+            $received = 0;
+        }
 
         foreach ($report->billingTotal() as $billing) {
             $this->billing += $billing['price'];
@@ -36,7 +56,7 @@ class ReportController
             'title' => 'Relatório',
             'rows' => $pag['rows'],
             'arrows' => $pag['arrows'],
-            'received' => count($pag['rows']),
+            'received' => $received,
             'return' => count($return),
             'products' => count($products),
             'billingTotal' => $this->billing,
@@ -49,9 +69,8 @@ class ReportController
      */
     public function reportCustom(): void
     {
-        Guardian::checkLogin();
         $search = input()->get('search')->getValue();
-        
+
         foreach ((new Report())->billingMonth(date('m')) as $billingMonth) {
             $this->billingMonth += $billingMonth['price'];
         }

@@ -11,11 +11,18 @@ use Solital\Core\Security\Guardian;
 class OrderController
 {
     /**
+     * Costruct
+     */
+    public function __construct()
+    {
+        Guardian::checkLogin();
+    }
+
+    /**
      * @return void
      */
     public function order(): void
     {
-        Guardian::checkLogin();
         $pag = (new Order())->pagination();
 
         if ($pag['rows'] == null) {
@@ -39,7 +46,6 @@ class OrderController
      */
     public function sendOrder(): void
     {
-        Guardian::checkLogin();
         $pag = (new Order())->sendPagination();
 
         if ($pag['rows'] == null) {
@@ -63,16 +69,16 @@ class OrderController
      */
     public function orderDetails($id): void
     {
-        Guardian::checkLogin();
         remove_param();
+
         $order = (new Order())->list($id);
         $photo = (new Setting())->list();
         $total = 0;
-        
+
         foreach ($order as $order2) {
-            $total += $order2['price'] * $order2['qtd'];   
+            $total += $order2['price'] * $order2['qtd'];
         }
-        
+
         Wolf::loadView('view.admin.admin-detail-order', [
             'title' => 'Detalhes do pedido',
             'order' => $order,
@@ -87,7 +93,6 @@ class OrderController
      */
     public function editStatus($id): void
     {
-        Guardian::checkLogin();
         remove_param();
 
         Wolf::loadView('view.admin.admin-edit-status', [
@@ -102,12 +107,12 @@ class OrderController
      */
     public function editStatusPost($id): void
     {
-        Guardian::checkLogin();
         remove_param();
+
         $status = input()->post('status')->getValue();
-        
+
         $res = (new Order())->update($status, $id);
-        
+
         if ($res == true) {
             Message::new('editStatus', 'Status alterado com sucesso');
             response()->redirect(url('order'));
@@ -120,11 +125,10 @@ class OrderController
      */
     public function deliveredOrder($id)
     {
-        Guardian::checkLogin();
         remove_param();
-        
+
         $res = (new Order())->update("Entregue", $id);
-        
+
         if ($res == true) {
             Message::new('delivered', 'Pedido marcado como entregue');
             response()->redirect(url('send.order'));
@@ -137,9 +141,8 @@ class OrderController
      */
     public function deleteOrder($id): void
     {
-        Guardian::checkLogin();
-        $res = (new Order())->delete($id);
-        
+        (new Order())->delete($id);
+
         Message::new('delOr', 'Pedido deletado com sucesso');
         response()->redirect(url('order'));
     }

@@ -109,11 +109,11 @@ function redirect(string $url, ?int $code = null): void
  * Get current csrf-token
  * @return string|null
  */
-function csrf_token(): ?string
+function csrf_token(int $seconds = 90): ?string
 {
     $baseVerifier = Course::router()->getCsrfVerifier();
     if ($baseVerifier !== null) {
-        return "<input type='hidden' name='csrf_token' value='".$baseVerifier->getTokenProvider()->setToken()."'>";
+        return "<input type='hidden' name='csrf_token' value='".$baseVerifier->getTokenProvider()->setToken($seconds)."'>";
     }
 
     return null;
@@ -166,13 +166,48 @@ function pass_verify($value, string $hash): bool
 function remove_param(): void
 {
     $http = 'http://';
-    if (isset($_SERVER['HTTPS'])) {
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
         $http = 'https://';
     }
-    $url = $http.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+    $url = $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-    if (isset($_SERVER['QUERY_STRING'])) {
-        $url = preg_replace('/\\?.*/', '', $url);
-        response()->redirect($url);
+    $url = parse_url($url);
+
+    if (isset($url['query'])) {
+        if (strpos($_SERVER["HTTP_HOST"], "localhost") !== false) {
+            header('Refresh: 0, url =' . $url['scheme'] . "://" . $_SERVER["HTTP_HOST"] . $url['path']);
+            die;
+        } else {
+            if (isset($url['path'])) {
+                header('Refresh: 0, url =' . $url['scheme'] . "://" . $url['host'] . $url['path']);
+                die;
+            } else {
+                header('Refresh: 0, url =' . $url['scheme'] . "://" . $url['host']);
+                die;
+            }
+        }
     }
+}
+
+/**
+ * @param string $value
+ * 
+ * @return string
+ */
+function format_price(string $value): string
+{
+    return number_format($value, 2, ",", ".");
+}
+
+/**
+ * @param string $value
+ * 
+ * @return string
+ */
+function format_number(string $value): string
+{
+    $value = str_replace(".", "", $value);
+    $value = str_replace(",", ".", $value);
+
+    return $value;
 }

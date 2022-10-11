@@ -12,7 +12,7 @@
                         <i class="fas fa-check"></i>
                     </div>
                     <div class="col-md-6 col-sm-12 text-center">
-                        <p class="h6 mt-3">Pedidos Entregues</p>
+                        <p class="h6 mt-3">Produtos Entregues</p>
                         <p class="h1"><?= $received ?></p>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                         <i class="fas fa-times"></i>
                     </div>
                     <div class="col-md-6 text-center">
-                        <p class="h6 mt-3">Pedidos Retornados</p>
+                        <p class="h6 mt-3">Produtos Retornados</p>
                         <p class="h1"><?= $return ?></p>
                     </div>
                 </div>

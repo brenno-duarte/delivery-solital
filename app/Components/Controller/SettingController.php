@@ -9,19 +9,33 @@ use Solital\Core\Wolf\Wolf;
 
 class SettingController
 {
+
+    /**
+     * @var mixed
+     */
+    private $imgDir;
+
+    /**
+     * Construct
+     */
+    public function __construct()
+    {
+        $this->imgDir = dirname(__DIR__, 3) . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . '_img';
+    }
+
     /**
      * @return void
      */
-    public function setting(): void
+    public function informations(): void
     {
-        Wolf::loadView('view.admin.admin-setting', [
-            'title' => 'Configurações',
-            'setting' => (new Setting())->list(),
-            'msg1' => Message::get('setting'),
+        Wolf::loadView('view.admin.admin-informations', [
+            'title' => 'Informações da empresa',
+            'informations' => (new Setting())->list(),
+            'msg1' => Message::get('informations'),
             'msg2' => Message::get('photoSet')
         ]);
 
-        Message::clear('setting');
+        Message::clear('informations');
         Message::clear('photoSet');
     }
 
@@ -29,19 +43,33 @@ class SettingController
      * @param string $id
      * @return void
      */
-    public function settingPost($id)
+    public function informationsPost($id)
     {
-        $post = input()->all();
-        $ext = input()->file('logo')->getExtension();
-        $imgMain = 'IMG-'.uniqid().".".$ext;
-        input()->file('logo')->move(UP_DIR.'/'.$imgMain);
+        $imgMain = null;
 
-        $res = (new Setting())->update($post['company'], $post['phone'], $post['email'], 
-        $post['address'], $post['district'], $post['state'], $post['number'], $imgMain, $id);
+        $post = input()->all();
+        $logo = input()->file('logo');
+
+        if ($logo->getExtension()) {
+            $imgMain = 'LOGO_' . uniqid() . "." . $logo->getExtension();
+            input()->file('logo')->move($this->imgDir . DIRECTORY_SEPARATOR . $imgMain);
+        }
+
+        $res = (new Setting())->update(
+            $post['company'],
+            $post['phone'],
+            $post['email'],
+            $post['address'],
+            $post['district'],
+            $post['state'],
+            $post['number'],
+            $imgMain,
+            $id
+        );
 
         if ($res == true) {
-            Message::new('setting', 'Configurações atualizadas com sucesso');
-            response()->redirect(url('setting'));
+            Message::new('informations', 'Informações atualizadas com sucesso');
+            response()->redirect(url('informations'));
         }
     }
 
@@ -57,7 +85,23 @@ class SettingController
 
         if ($res == true) {
             Message::new('photoSet', 'Foto excluida com sucesso');
-            response()->redirect(url('setting'));
+            response()->redirect(url('informations'));
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function payments(): void
+    {
+        Wolf::loadView('view.admin.admin-payments', [
+            'title' => 'Pagamentos',
+            'informations' => (new Setting())->list(),
+            'msg1' => Message::get('informations'),
+            'msg2' => Message::get('photoSet')
+        ]);
+
+        Message::clear('informations');
+        Message::clear('photoSet');
     }
 }

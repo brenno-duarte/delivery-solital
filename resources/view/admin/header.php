@@ -65,9 +65,19 @@ use Solital\Core\Resource\Session;
                         <i class="fas fa-chart-bar"></i> Relatório
                     </a>
 
-                    <a href="<?= url('setting') ?>" class="list-group-item list-group-item-action no-border bg-menu">
+                    <a class="list-group-item list-group-item-action no-border bg-menu" href="#config" data-toggle="collapse" aria-expanded="false">
                         <i class="fas fa-cog"></i> Configurações
+                        <i class="fas fa-arrows-alt-v"></i>
                     </a>
+                    <ul class="collapse list-unstyled" id="config">
+                        <a href="<?= url('informations'); ?>" class="subitem">
+                            <li class="p-3">Informações da empresa</li>
+                        </a>
+
+                        <a href="<?= url('payments'); ?>" class="subitem">
+                            <li class="p-3">Pagamentos</li>
+                        </a>
+                    </ul>
                     
                     <a href="about.php" class="list-group-item list-group-item-action no-border bg-menu">
                         <i class="fas fa-address-card"></i> About

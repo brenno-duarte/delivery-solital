@@ -39,6 +39,7 @@ Course::partialGroup('/admin', function() {
     Course::get('/edit-product/{id}', 'ProductController@editProduct')->name('edit.product');
     Course::post('/edit-product-post/{id}', 'ProductController@editProductPost')->name('edit.product.post');
     Course::get('/delete-product/{id}', 'ProductController@deleteProduct')->name('delete.product');
+    Course::get('/delete-photo/{id}/{idProduct}', 'ProductController@deletePhoto')->name('delete.photo');
 
     /**
      * Order
@@ -60,7 +61,9 @@ Course::partialGroup('/admin', function() {
     /**
      * Setting
      */
-    Course::get('/setting', 'SettingController@setting')->name('setting');
-    Course::post('/setting-post/{id}', 'SettingController@settingPost')->name('setting.post');
+    Course::get('/informations', 'SettingController@informations')->name('informations');
+    Course::post('/informations-post/{id}', 'SettingController@informationsPost')->name('informations.post');
     Course::get('/delete-logo/{id}', 'SettingController@deleteLogo')->name('delete.logo');
+    Course::get('/payments', 'SettingController@payments')->name('payments');
+    Course::post('/payments-post/{id}', 'SettingController@paymentsPost')->name('payments.post');
 });

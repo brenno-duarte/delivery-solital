@@ -1,6 +1,8 @@
 <?php
 
 namespace Solital\Components\Controller\Auth;
+
+use Solital\Core\Resource\Session;
 use Solital\Core\Security\Guardian;
 
 class AuthController extends Guardian
@@ -29,17 +31,24 @@ class AuthController extends Guardian
      * Authenticates the user in the system
      * @param string $table
      */
-    public function register(string $table) 
+    public function register(string $table, string $redirect = null)
     {
         $user = filter_input(INPUT_POST, $this->user_post);
         $pass = filter_input(INPUT_POST, $this->pass_post);
-        
+
         $res = Guardian::verifyLogin()
-               ->table($table)
-               ->fields($this->user_column, $this->pass_column, $user, $pass);
+            ->table($table)
+            ->fields($this->user_column, $this->pass_column, $user, $pass);
         
         if ($res) {
-            Guardian::validate($user);
+            if ($redirect != null) {
+                Session::new('solital_index_profile', $user);
+                Session::new('last_id', $res['idProfile']);
+                
+                response()->redirect($redirect);
+            } else {
+                Guardian::validate($user);
+            }
         } else {
             return false;
         }

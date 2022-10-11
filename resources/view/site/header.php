@@ -31,31 +31,40 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-warning">
         <div class="container">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Alterna navegação">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="menu">
+            <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link text-dark" href="<?= url('home'); ?>">Início</a>
+                        <a class="nav-link" href="<?= url('home'); ?>">Início <span class="sr-only">(página atual)</span></a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link txt-5 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #000 !important;">
                             Categorias
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {% include 'site/category-menu.html' %}
+                            <?php foreach ($categories as $cat) : ?>
+                                <a class="dropdown-item" href="/categories/$cat['idCategory']"><?= $cat['nameCategory'] ?></a>
+                            <?php endforeach; ?>
                         </div>
                     </li>
                 </ul>
+                <div class="form-inline my-2 my-lg-0">
+                    <!-- <form>
+                        <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
+                    </form> -->
+
+                    <?php if (Solital\Core\Resource\Session::has('solital_index_profile')) : ?>
+                        <a href="<?= url('profile') ?>" class="btn btn-primary">Acessar conta</a>
+                    <?php else : ?>
+                        <a href="<?= url('profile.login') ?>" class="btn btn-primary">Fazer Login</a>
+                    <?php endif; ?>
+                </div>
             </div>
-            <!-- <a class="nav-link text-dark mini-menu" href="?= url('cart'); ?>">
-                <i class="fas fa-shopping-cart" style="font-size: 30px;"></i>
-                <span class="txt-r">
-                    Carrinho
-                </span>
-            </a> -->
         </div>
     </nav>
 

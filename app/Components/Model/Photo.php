@@ -15,24 +15,63 @@ class Photo extends Model
         ];
     }
 
+    /**
+     * @return null|array
+     */
     public function listAll()
     {
         return $this->instance()->select()->build('All');
     }
     
-    public function list($id)
+    /**
+     * @param int $id
+     * 
+     * @return null|array
+     */
+    public function list(int $id)
     {
-        return $this->instance()
-                    ->customQueryAll("SELECT * FROM $this->table WHERE idProduct = $id");
+        return $this->instance()->select(null, "idProduct = $id")->build('ALL');
     }
 
-    public function insert($idproduct, $namephoto)
+    /**
+     * @param int $id
+     * 
+     * @return null|array
+     */
+    public function listPhoto(int $id)
+    {
+        return $this->instance()->select($id)->build('ONLY');
+    }
+
+    /**
+     * @param int $idproduct
+     * @param string $namephoto
+     * 
+     * @return bool
+     */
+    public function insert(int $idproduct, string $namephoto)
     {
         return $this->instance()->insert([$idproduct, $namephoto]);
     }
 
-    public function delete($id)
+    /**
+     * @param int $idphoto
+     * @param string $namephoto
+     * 
+     * @return bool
+     */
+    public function update(int $idphoto, string $namephoto)
     {
-        return $this->instance()->delete($id, "idProduct")->build();
+        return $this->instance()->update(["namePhoto"], [$namephoto], $idphoto);
+    }
+
+    /**
+     * @param int $id
+     * 
+     * @return bool
+     */
+    public function delete(int $id)
+    {
+        return $this->instance()->delete($id)->build();
     }
 }
